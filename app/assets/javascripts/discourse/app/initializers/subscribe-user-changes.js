@@ -7,8 +7,12 @@ export default {
 
     if (user) {
       const bus = container.lookup("message-bus:main");
+      const appEvents = container.lookup("service:app-events");
       bus.subscribe("/user", (data) => {
         user.setProperties(data);
+        Object.entries(data).forEach(([key, value]) =>
+          appEvents.trigger(key, value)
+        );
       });
     }
   },
