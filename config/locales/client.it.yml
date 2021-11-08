@@ -1143,7 +1143,7 @@ it:
         tags: "Etichette"
         warnings: "Avvertimenti ufficiali"
         read_more_in_group: "Vuoi continuare a leggere? Sfoglia altri messaggi in %{groupLink}."
-        read_more: "Vuoi saperne di più? Sfoglia altri messaggi nei <a href='%{basePath}/u/%{username}/message'>messaggi personali</a>."
+        read_more: "Vuoi saperne di più? Leggi altri messaggi in <a href='%{basePath}/u/%{username}/messages'>messaggi personali</a>."
       preferences_nav:
         account: "Account"
         security: "Sicurezza"
@@ -3573,6 +3573,8 @@ it:
       no_activity_others: "Nessuna attività."
       no_replies_others: "Nessuna risposta."
       no_likes_others: "Nessun messaggio con \"Mi piace\"."
+    fullscreen_table:
+      expand_btn: "Espandi Tabella"
   admin_js:
     type_to_filter: "digita per filtrare..."
     admin:
@@ -4170,11 +4172,11 @@ it:
 
               Si consiglia di assegnare un prefisso ai nomi delle proprietà per evitare conflitti con i plugin e/o il kernel.
           head_tag:
-            text: "</head>"
-            title: "HTML che sarà inserito prima del tag </head> "
+            text: "Intestazione"
+            title: "L'HTML sarà inserito prima dell'etichetta di intestazione"
           body_tag:
-            text: "</body>"
-            title: "HTML che deve essere inserito prima del tag </body>"
+            text: "Corpo"
+            title: "HTML che sarà inserito prima dell'etichetta del corpo"
           yaml:
             text: "YAML"
             title: "Definisci le impostazioni del tema in formato YAML"

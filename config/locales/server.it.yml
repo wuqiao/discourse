@@ -250,7 +250,6 @@ it:
   topic_invite:
     failed_to_invite: "L'utente non può essere invitato in questo argomento senza essere membro di uno dei seguenti gruppi: %{group_names}."
     user_exists: "Spiacenti, l'utente è stato già invitato. Puoi invitare un utente ad uno stesso argomento solo una volta."
-    muted_invitee: "Spiacenti, quell'utente ti ha silenziato."
     muted_topic: "Spiacenti, quell'utente ha silenziato questo argomento."
     receiver_does_not_allow_pm: "Spiacenti, quell'utente non ti permette di inviargli messaggi privati."
     sender_does_not_allow_pm: "Spiacenti, non permetti a quell'utente di inviarti messaggi privati."
@@ -1784,7 +1783,7 @@ it:
     topic_view_duration_hours: "Conteggia una nuova visita dell'argomento una volta per IP/Utente ogni N ore"
     user_profile_view_duration_hours: "Conteggia una nuova visita del profilo utente una volta per IP/Utente ogni N ore"
     levenshtein_distance_spammer_emails: "Quanti caratteri di differenza faranno comunque scattare una corrispondenza approssimativa nell'analisi delle email di spam. "
-    max_new_accounts_per_registration_ip: "Se vi sono già (n) account con livello di attendibilità 0 da questo IP (e nessuno è membro dello staff o a livello TL2 o superiore), non accettare nuove iscrizioni utente da questo IP."
+    max_new_accounts_per_registration_ip: "Se vi sono già (n) account con livello di attendibilità 0 da questo IP (e nessuno è membro dello staff o a livello 2 o superiore), non accettare nuove iscrizioni da questo IP. Impostare a 0 per disabilitare il limite."
     min_ban_entries_for_roll_up: "Quando si clicca il pulsante Roll up, verrà creato un nuovo elenco di IP interdetti se sono presenti almeno (N) elementi."
     max_age_unmatched_emails: "Elimina le voci di email scansionate senza corrispondenza dopo (N) giorni."
     max_age_unmatched_ips: "Elimina le voci di IP scansionati senza corrispondenza dopo (N) giorni."
