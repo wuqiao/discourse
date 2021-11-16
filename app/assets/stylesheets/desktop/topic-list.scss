@@ -226,7 +226,6 @@ button.dismiss-read {
       padding: 12px 5px;
     }
     // smaller table cell spacing
-    .topic-list-data,
     .topic-list-data {
       padding: 10px;
       font-size: $font-0;
@@ -235,14 +234,11 @@ button.dismiss-read {
     .topic-list-data.views {
       display: none;
     }
-    .topic-list-data.views {
-      display: none;
-    }
     // reduce width for more title space
-    .posts {
+    .topic-list-data.posts {
       width: 50px;
     }
-    .posters {
+    .topic-list-data.posters {
       width: 30px;
       text-align: center;
     }

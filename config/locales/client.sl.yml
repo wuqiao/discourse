@@ -3576,7 +3576,6 @@ sl:
         delete: Trajno izbriši
         not_shown_again: Ta ključ ne bo več prikazan. Preden nadaljujete, si ustvarite kopijo.
         continue: Nadaljuj
-        use_global_key: Globalni ključ (omogoča vsa dejanja)
         scopes:
           action: Dejanje
           descriptions:
@@ -4269,7 +4268,6 @@ sl:
           badge_query_examples_title: "Primeri poizvedb SQL za značke"
       emoji:
         title: "Emoji"
-        help: "Dodaj nov emoji, ki bo na voljo vsem. (lahko prestavite in spustite več datotek naenkrat)"
         add: "Dodaj nov emoji"
         uploading: "Nalagam..."
         name: "Ime"

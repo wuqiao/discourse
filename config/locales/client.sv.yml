@@ -2034,6 +2034,8 @@ sv:
           desc: "Svara utan att ändra senaste svarsdatum"
       reload: "Ladda om"
       ignore: "Ignorera"
+      image_alt_text:
+        aria_label: Alternativ text för bild
     notifications:
       tooltip:
         regular:
@@ -3464,6 +3466,9 @@ sv:
       changed: "taggar ändrade:"
       tags: "Taggar"
       choose_for_topic: "alternativa taggar"
+      choose_for_topic_required:
+        one: "välj minst %{count} tagg..."
+        other: "välj minst %{count} taggar..."
       info: "Info"
       default_info: "Denna tagg är inte begränsad till några kategorier, och har inga synonymer. Om du vill lägga till begränsningar lägger du denna tagg i en <a href=%{basePath}/tag_groups>taggrupp</a>."
       category_restricted: "Denna tagg är begränsad till kategorier som du inte har tillträde till."
@@ -3815,6 +3820,7 @@ sv:
         no_description: (ingen beskrivning)
         all_api_keys: Alla API-nycklar
         user_mode: Användarnivå
+        scope_mode: Omfattning
         impersonate_all_users: Imitera en användare
         single_user: "Enstaka användare"
         user_placeholder: Ange användarnamn
@@ -3825,12 +3831,15 @@ sv:
         delete: Radera permanent
         not_shown_again: Denna nyckel kommer inte att visas igen. Försäkra dig om att du har tagit en kopia innan du fortsätter.
         continue: Fortsätt
-        use_global_key: Global nyckel (tillåter alla åtgärder)
         scopes:
           description: |
             När du använder omfång kan du begränsa en API-nyckel till en specifik uppsättning slutpunkter.
             Du kan också definiera vilka parametrar som ska tillåtas. Använd kommatecken för att separera flera värden.
           title: Omfattningar
+          granular: Granulär
+          read_only: Skrivskyddad
+          global: Global
+          global_description: API-nyckeln har ingen begränsning och alla slutpunkter är tillgängliga.
           resource: Resurs
           action: Åtgärd
           allowed_parameters: Tillåtna parametrar
@@ -3838,6 +3847,8 @@ sv:
           any_parameter: (valfri parameter)
           allowed_urls: Tillåtna webbadresser
           descriptions:
+            global:
+              read: Begränsa API-nyckel till skrivskyddade slutpunkter.
             topics:
               read: Läs ett ämne eller ett specifikt inlägg i det. RSS stöds också.
               write: Skapa ett nytt ämne eller inlägg till en befintligt sådan.
@@ -5079,7 +5090,7 @@ sv:
           grant_existing_holders: Utfärda ytterligare utmärkelser till befintliga utmärkelseinnehavare
       emoji:
         title: "Emoji"
-        help: "Lägg till en ny emoji för andra att använda. (TIPS: dra och släpp flera filer på en och samma gång)"
+        help: "Lägg till nya emoji som kommer att vara tillgängliga för alla. Dra och släpp flera filer samtidigt utan att ange ett namn för att skapa emojis med deras filnamn."
         add: "Lägg till ny emoji"
         uploading: "Laddar upp..."
         name: "Namn"
@@ -5090,7 +5101,7 @@ sv:
       embedding:
         get_started: "Börja genom att lägga till värden, om du vill bädda in Discourse på en annan hemsida. "
         confirm_delete: "Är du säker på att du vill ta bort värden?"
-        sample: "Använd följande HTML-kod på din webbplats för att skapa och bädda in discourse-ämnen. Byt ut <b>REPLACE_ME</b> mot den kanoniska URL-en för sidan som du bäddar in den i."
+        sample: "Klistra in följande HTML-kod på din webbplats för att skapa och bädda in discourse-ämnen. Byt ut <b>REPLACE_ME</b> mot den vägledande URL-en för sidan som du bäddar in den i."
         title: "Inbäddning"
         host: "Tillåtna värdar"
         class_name: "Klassnamn"

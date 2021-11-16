@@ -3,7 +3,7 @@ import {
   applyCachedInlineOnebox,
   deleteCachedInlineOnebox,
 } from "pretty-text/inline-oneboxer";
-import { module, skip, test } from "qunit";
+import QUnit, { module, skip, test } from "qunit";
 import Post from "discourse/models/post";
 import { buildQuote } from "discourse/lib/quote";
 import { deepMerge } from "discourse-common/lib/object";
@@ -1011,7 +1011,7 @@ eviltrout</p>
       "[test.pdf|attachment](upload://o8iobpLcW3WSFvVH7YQmyGlKmGM.pdf)",
       {
         siteSettings: { secure_media: false },
-        lookupUploadUrls: lookupUploadUrls,
+        lookupUploadUrls,
       },
       `<p><a class="attachment" href="/uploads/short-url/blah">test.pdf</a></p>`,
       "It returns the correct attachment link HTML when the URL is mapped without secure media"
@@ -1033,7 +1033,7 @@ eviltrout</p>
       "[test.pdf|attachment](upload://o8iobpLcW3WSFvVH7YQmyGlKmGM.pdf)",
       {
         siteSettings: { secure_media: true },
-        lookupUploadUrls: lookupUploadUrls,
+        lookupUploadUrls,
       },
       `<p><a class="attachment" href="/secure-media-uploads/original/3X/c/b/o8iobpLcW3WSFvVH7YQmyGlKmGM.pdf">test.pdf</a></p>`,
       "It returns the correct attachment link HTML when the URL is mapped with secure media"
@@ -1067,7 +1067,7 @@ eviltrout</p>
       "![baby shark|video](upload://eyPnj7UzkU0AkGkx2dx8G4YM1Jx.mp4)",
       {
         siteSettings: { secure_media: true },
-        lookupUploadUrls: lookupUploadUrls,
+        lookupUploadUrls,
       },
       `<p><div class="video-container">
     <video width="100%" height="100%" preload="metadata" controls>
@@ -1104,7 +1104,7 @@ eviltrout</p>
       "![baby shark|audio](upload://eyPnj7UzkU0AkGkx2dx8G4YM1Jx.mp3)",
       {
         siteSettings: { secure_media: true },
-        lookupUploadUrls: lookupUploadUrls,
+        lookupUploadUrls,
       },
       `<p><audio preload="metadata" controls>
     <source src="/secure-media-uploads/original/3X/c/b/test.mp3">
@@ -1689,6 +1689,7 @@ var bar = 'bar';
     };
 
     assert.cookedOptions("test fun funny", opts, "<p>test times funny</p>");
+    assert.cookedOptions("constructor", opts, "<p>constructor</p>");
   });
 
   test("watched words link", function (assert) {

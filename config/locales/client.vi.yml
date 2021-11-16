@@ -3416,7 +3416,6 @@ vi:
         delete: Xóa vĩnh viễn
         not_shown_again: Khóa này sẽ không được hiển thị lại. Đảm bảo bạn chụp một bản sao trước khi tiếp tục.
         continue: Tiếp tục
-        use_global_key: Khóa toàn cầu (cho phép tất cả các hành động)
         scopes:
           description: |
             Khi sử dụng phạm vi, bạn có thể hạn chế khóa API đối với một tập hợp các điểm cuối cụ thể.
@@ -4542,7 +4541,6 @@ vi:
           replace_owners: Xóa huy hiệu khỏi chủ sở hữu trước đó
       emoji:
         title: "Emoji"
-        help: "Thêm emoji mới có sẵn cho tất cả mọi người. (MẸO: kéo & thả nhiều file cùng lúc)"
         add: "Thêm emoji mới"
         uploading: "Đang tải lên..."
         name: "Tên"
@@ -4552,7 +4550,6 @@ vi:
       embedding:
         get_started: "Nếu bạn muốn nhúng Discourse trên một website khác, bắt đầu bằng cách thêm host."
         confirm_delete: "Bạn muốn xóa host này?"
-        sample: "Sử dụng mã HTML sau vào website để tạo và nhúng các chủ đề. Thay thế <b>REPLACE_ME</b> với Canonical URL của trang bạn muốn nhúng."
         title: "Nhúng"
         host: "Cho phép Host"
         class_name: "Tên lớp"

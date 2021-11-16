@@ -8,7 +8,13 @@ import {
   updateCurrentUser,
   visible,
 } from "discourse/tests/helpers/qunit-helpers";
-import { click, currentURL, fillIn, visit } from "@ember/test-helpers";
+import {
+  click,
+  currentURL,
+  fillIn,
+  triggerKeyEvent,
+  visit,
+} from "@ember/test-helpers";
 import { skip, test } from "qunit";
 import Draft from "discourse/models/draft";
 import I18n from "I18n";
@@ -373,11 +379,9 @@ acceptance("Composer", function (needs) {
 
     // at this point, request is in flight, so post is staged
     assert.strictEqual(count(".topic-post.staged"), 1);
-    assert.ok(
-      find(".topic-post:nth-of-type(1)")[0].className.includes("staged")
-    );
+    assert.ok(query(".topic-post:nth-of-type(1)").className.includes("staged"));
     assert.strictEqual(
-      find(".topic-post.staged .cooked").text().trim(),
+      query(".topic-post.staged .cooked").innerText.trim(),
       "will return empty json"
     );
 
@@ -388,26 +392,23 @@ acceptance("Composer", function (needs) {
     assert.strictEqual(count(".topic-post.staged"), 0);
   });
 
-  QUnit.skip(
-    "Editing a post can rollback to old content",
-    async function (assert) {
-      await visit("/t/internationalization-localization/280");
-      await click(".topic-post:nth-of-type(1) button.show-more-actions");
-      await click(".topic-post:nth-of-type(1) button.edit");
+  skip("Editing a post can rollback to old content", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+    await click(".topic-post:nth-of-type(1) button.show-more-actions");
+    await click(".topic-post:nth-of-type(1) button.edit");
 
-      await fillIn(".d-editor-input", "this will 409");
-      await fillIn("#reply-title", "This is the new text for the title");
-      await click("#reply-control button.create");
+    await fillIn(".d-editor-input", "this will 409");
+    await fillIn("#reply-title", "This is the new text for the title");
+    await click("#reply-control button.create");
 
-      assert.ok(!exists(".topic-post.staged"));
-      assert.strictEqual(
-        find(".topic-post .cooked")[0].innerText,
-        "Any plans to support localization of UI elements, so that I (for example) could set up a completely German speaking forum?"
-      );
+    assert.ok(!exists(".topic-post.staged"));
+    assert.strictEqual(
+      query(".topic-post .cooked").innerText,
+      "Any plans to support localization of UI elements, so that I (for example) could set up a completely German speaking forum?"
+    );
 
-      await click(".bootbox.modal .btn-primary");
-    }
-  );
+    await click(".bootbox.modal .btn-primary");
+  });
 
   test("Composer can switch between edits", async function (assert) {
     await visit("/t/this-is-a-test-topic/9");
@@ -965,6 +966,135 @@ acceptance("Composer", function (needs) {
     assert.ok(
       !exists("script"),
       "it does not unescape script tags in code blocks"
+    );
+  });
+
+  test("Editing alt text for single image in preview edits alt text in composer", async function (assert) {
+    const altText = ".image-wrapper .button-wrapper .alt-text";
+    const editAltTextButton =
+      ".image-wrapper .button-wrapper .alt-text-edit-btn";
+    const altTextInput = ".image-wrapper .button-wrapper .alt-text-input";
+
+    await visit("/");
+
+    await click("#create-topic");
+    await fillIn(".d-editor-input", `![zorro|200x200](upload://zorro.png)`);
+
+    // placement of elements
+
+    assert.ok(
+      exists(altText),
+      "shows alt text in the image wrapper's button wrapper"
+    );
+
+    assert.ok(
+      exists(editAltTextButton + " .d-icon-pencil"),
+      "alt text edit button with icon is in the image wrapper's button wrapper"
+    );
+
+    assert.ok(
+      exists(altTextInput),
+      "alt text input is in the image wrapper's button wrapper"
+    );
+
+    // logical
+
+    assert.equal(query(altText).innerText, "zorro", "correct alt text");
+    assert.ok(visible(altText), "alt text is visible");
+    assert.ok(visible(editAltTextButton), "alt text edit button is visible");
+    assert.ok(invisible(altTextInput), "alt text input is not visible");
+
+    await click(editAltTextButton);
+
+    assert.ok(invisible(altText), "readonly alt text is not visible");
+    assert.ok(
+      invisible(editAltTextButton),
+      "alt text edit button is not visible"
+    );
+    assert.ok(visible(altTextInput), "alt text input is visible");
+    assert.equal(
+      queryAll(altTextInput).val(),
+      "zorro",
+      "correct alt text in input"
+    );
+
+    await triggerKeyEvent(altTextInput, "keypress", "[".charCodeAt(0));
+    await triggerKeyEvent(altTextInput, "keypress", "]".charCodeAt(0));
+    assert.equal(
+      queryAll(altTextInput).val(),
+      "zorro",
+      "does not input [ ] keys"
+    );
+
+    await fillIn(altTextInput, "steak");
+    await triggerKeyEvent(altTextInput, "keypress", 13);
+
+    assert.equal(
+      queryAll(".d-editor-input").val(),
+      "![steak|200x200](upload://zorro.png)",
+      "alt text updated"
+    );
+    assert.equal(query(altText).innerText, "steak", "shows the alt text");
+    assert.ok(visible(editAltTextButton), "alt text edit button is visible");
+    assert.ok(invisible(altTextInput), "alt text input is not visible");
+  });
+
+  test("Editing alt text for one of two images in preview updates correct alt text in composer", async function (assert) {
+    const editAltTextButton =
+      ".image-wrapper .button-wrapper .alt-text-edit-btn";
+    const altTextInput = ".image-wrapper .button-wrapper .alt-text-input";
+
+    await visit("/");
+    await click("#create-topic");
+
+    await fillIn(
+      ".d-editor-input",
+      `![zorro|200x200](upload://zorro.png) ![not-zorro|200x200](upload://not-zorro.png)`
+    );
+    await click(editAltTextButton);
+
+    await fillIn(altTextInput, "tomtom");
+    await triggerKeyEvent(altTextInput, "keypress", 13);
+
+    assert.equal(
+      queryAll(".d-editor-input").val(),
+      `![tomtom|200x200](upload://zorro.png) ![not-zorro|200x200](upload://not-zorro.png)`,
+      "the correct image's alt text updated"
+    );
+  });
+
+  test("Deleting alt text for image empties alt text in composer and allows further modification", async function (assert) {
+    const altText = ".image-wrapper .button-wrapper .alt-text";
+    const editAltTextButton =
+      ".image-wrapper .button-wrapper .alt-text-edit-btn";
+    const altTextInput = ".image-wrapper .button-wrapper .alt-text-input";
+
+    await visit("/");
+
+    await click("#create-topic");
+    await fillIn(".d-editor-input", `![zorro|200x200](upload://zorro.png)`);
+
+    await click(editAltTextButton);
+
+    await fillIn(altTextInput, "");
+    await triggerKeyEvent(altTextInput, "keypress", 13);
+
+    assert.equal(
+      queryAll(".d-editor-input").val(),
+      "![|200x200](upload://zorro.png)",
+      "alt text updated"
+    );
+    assert.equal(query(altText).innerText, "", "shows the alt text");
+
+    await click(editAltTextButton);
+
+    await fillIn(altTextInput, "tomtom");
+    await triggerKeyEvent(altTextInput, "keypress", 13);
+
+    assert.equal(
+      queryAll(".d-editor-input").val(),
+      "![tomtom|200x200](upload://zorro.png)",
+      "alt text updated"
     );
   });
 

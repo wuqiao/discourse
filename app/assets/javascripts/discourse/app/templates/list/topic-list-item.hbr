@@ -1,7 +1,7 @@
 {{~raw-plugin-outlet name="topic-list-before-columns"}}
 
 {{#if bulkSelectEnabled}}
-  <div class="bulk-select">
+  <div class="bulk-select topic-list-data">
     <label for="bulk-select-{{topic.id}}">
       <input type="checkbox" class="bulk-select" id="bulk-select-{{topic.id}}">
     </label>
@@ -15,6 +15,7 @@
   This causes the topic-post-badge to be considered the same word as "text"
   at the end of the link, preventing it from line wrapping onto its own line.
 --}}
+
 <div class='main-link topic-list-data' colspan="1">
   {{~raw-plugin-outlet name="topic-list-before-link"}}
   <span class='link-top-line'>
@@ -74,5 +75,4 @@
 {{/if}}
 
 <div class="num views {{topic.viewsHeat}} topic-list-data">{{number topic.views numberKey="views_long"}}</div>
-
 {{raw "list/activity-column" topic=topic class="num topic-list-data" tagName="div"}}

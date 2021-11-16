@@ -1807,6 +1807,8 @@ fa_IR:
           label: "فعالسازی بالا آوردن مبحث در لیست"
           desc: "بدون تغییر زمان اخرین پاسخ، پاسخ دهید."
       ignore: "چشم پوشی"
+      image_alt_text:
+        aria_label: متن Alt برای عکس
     notifications:
       tooltip:
         regular:
@@ -2942,6 +2944,9 @@ fa_IR:
       changed: "برچسب‌های تغییر یافته:"
       tags: "برچسب‌ها"
       choose_for_topic: "برچسب‌های اختیاری"
+      choose_for_topic_required:
+        one: "حداقل برچسب %{count} را انتخاب کنید..."
+        other: "حداقل برچسب %{count} را انتخاب کنید..."
       info: "اطلاعات"
       add_synonyms: "افزودن"
       delete_tag: "حذف برچسب"
@@ -3190,6 +3195,8 @@ fa_IR:
         save: ذخیره
         continue: ادامه
         scopes:
+          read_only: فقط خواندنی
+          global: جهانی
           action: اقدام
       web_hooks:
         title: "webhook ها"
@@ -3480,8 +3487,12 @@ fa_IR:
           embedded_scss:
             text: "کد CSS جاسازی شده"
             title: "کد CSS سفارشی مد نظرتان را اینجا وارد کنید"
+          head_tag:
+            text: "Head"
+            title: "کد HTML که قبل از برچسب head درج خواهد شد"
           body_tag:
-            text: "بدنه"
+            text: "Body"
+            title: "کد HTML که قبل از برچسب body درج خواهد شد"
           yaml:
             text: "YAML"
         colors:
@@ -4072,7 +4083,6 @@ fa_IR:
             with_time: <span class="username">%{username}</span> در <span class="time">%{time}</span>
       emoji:
         title: "شکلک"
-        help: "اضافه کردن شکلک های جدید که در دسترس همگان خواهد بود.(PROTIP: کشیدن و رها کردن چند فایل در یک بار)"
         add: "افزودن شکلک جدید"
         uploading: "در حال بار گذاری ..."
         name: "نام"
@@ -4082,7 +4092,6 @@ fa_IR:
       embedding:
         get_started: "اگر مایل هستید که Discourse را بر روی یک وبسایت دیگر جاساز کنید, با اضافه کردن میزبان یا همان هاست آن وبسایت شروع کنید."
         confirm_delete: "آیا مطمئن هستید که میخواهید آن میزبان را حذف کنید؟"
-        sample: "از این کد HTML در سایت خود استفاده کنید تا بتوانید مبحث های Discourse ایجاد کنید یا جاساز کنید, این کد <b>REPLACE_ME</b> را به URL استاندارد صفحه ای که بر روی آن جاسازی میکنید تغییر دهید."
         title: "جاسازی"
         host: "میزبان های مجاز"
         class_name: "نام کلاس"

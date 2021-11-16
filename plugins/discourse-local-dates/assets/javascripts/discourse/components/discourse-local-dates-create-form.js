@@ -12,6 +12,7 @@ import loadScript from "discourse/lib/load-script";
 import { notEmpty } from "@ember/object/computed";
 import { propertyNotEqual } from "discourse/lib/computed";
 import { schedule } from "@ember/runloop";
+import { getOwner } from "discourse-common/lib/get-owner";
 
 export default Component.extend({
   timeFormat: "HH:mm:ss",
@@ -211,7 +212,7 @@ export default Component.extend({
   previewedFormats(formats) {
     return formats.map((format) => {
       return {
-        format: format,
+        format,
         preview: moment().format(format),
       };
     });
@@ -435,7 +436,7 @@ export default Component.extend({
   },
 
   _closeModal() {
-    const composer = Discourse.__container__.lookup("controller:composer");
+    const composer = getOwner(this).lookup("controller:composer");
     composer.send("closeModal");
   },
 });

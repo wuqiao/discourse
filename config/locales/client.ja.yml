@@ -3554,7 +3554,6 @@ ja:
         delete: 永久に削除
         not_shown_again: このキーは二度と表示されません。続行する前に必ずコピーしてください。
         continue: 続行
-        use_global_key: グローバルキー (すべての操作を許可)
         scopes:
           description: |
             スコープを使用する場合、API キーを特定のエンドポイントのセットに制限できます。
@@ -4783,7 +4782,6 @@ ja:
           grant_existing_holders: 既存のバッジ保有者に追加のバッジを付与する
       emoji:
         title: "絵文字"
-        help: "みんなが利用できる新しい絵文字を追加します。(ヒント: 複数のファイルを一度にドラッグアンドドロップできます)"
         add: "新しい絵文字を追加"
         uploading: "アップロード中..."
         name: "名前"
@@ -4794,7 +4792,6 @@ ja:
       embedding:
         get_started: "ほかのウェブサイトに Discourse を埋め込む場合は、まずホストを追加してください。"
         confirm_delete: "このホストを削除してもよろしいですか？"
-        sample: "次の HTML コードをサイトに使用して、Discourse のトピックを作成して埋め込みます。<b>REPLACE_ME</b> を埋め込み先の正規 URL に置き換えてください。"
         title: "埋め込み"
         host: "許可されたホスト"
         class_name: "クラス名"

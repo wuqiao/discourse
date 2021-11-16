@@ -13,25 +13,20 @@ import DropTarget from "@uppy/drop-target";
 import XHRUpload from "@uppy/xhr-upload";
 import AwsS3 from "@uppy/aws-s3";
 import UppyChecksum from "discourse/lib/uppy-checksum-plugin";
+import UppyS3Multipart from "discourse/mixins/uppy-s3-multipart";
 import { on } from "discourse-common/utils/decorators";
 import { warn } from "@ember/debug";
+import bootbox from "bootbox";
 
 export const HUGE_FILE_THRESHOLD_BYTES = 104_857_600; // 100MB
 
-export default Mixin.create({
+export default Mixin.create(UppyS3Multipart, {
   uploading: false,
   uploadProgress: 0,
   _uppyInstance: null,
   autoStartUploads: true,
   _inProgressUploads: 0,
   id: null,
-
-  // TODO (martin): currently used for backups to turn on auto upload and PUT/XML requests
-  // and for emojis to do sequential uploads, when we get to replacing those
-  // with uppy make sure this is used when initializing uppy
-  uploadOptions() {
-    return {};
-  },
 
   uploadDone() {
     warn("You should implement `uploadDone`", {
@@ -124,6 +119,13 @@ export default Mixin.create({
           this._reset();
           return false;
         }
+
+        // for a single file, we want to override file meta with the
+        // data property (which may be computed), to override any keys
+        // specified by this.data (such as name)
+        if (fileCount === 1) {
+          deepMerge(Object.values(files)[0].meta, this.data);
+        }
       },
     });
 
@@ -170,7 +172,7 @@ export default Mixin.create({
     });
 
     this._uppyInstance.on("upload-error", (file, error, response) => {
-      displayErrorForUpload(response, this.siteSettings, file.name);
+      displayErrorForUpload(response || error, this.siteSettings, file.name);
       this._reset();
     });
 
@@ -184,7 +186,11 @@ export default Mixin.create({
       this.siteSettings.enable_direct_s3_uploads &&
       !this.preventDirectS3Uploads
     ) {
-      this._useS3Uploads();
+      if (this.useMultipartUploadsIfAvailable) {
+        this._useS3MultipartUploads();
+      } else {
+        this._useS3Uploads();
+      }
     } else {
       this._useXHRUploads();
     }
