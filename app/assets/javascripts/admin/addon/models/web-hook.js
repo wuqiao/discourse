@@ -2,7 +2,6 @@ import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import Category from "discourse/models/category";
 import Group from "discourse/models/group";
 import RestModel from "discourse/models/rest";
-import Site from "discourse/models/site";
 import { isEmpty } from "@ember/utils";
 
 export default RestModel.extend({
@@ -34,7 +33,7 @@ export default RestModel.extend({
     const groupIds = this.group_ids;
     this.set(
       "groupsFilterInName",
-      Site.currentProp("groups").reduce((groupNames, g) => {
+      this.site.groups.reduce((groupNames, g) => {
         if (groupIds.includes(g.id)) {
           groupNames.push(g.name);
         }
@@ -85,7 +84,7 @@ export default RestModel.extend({
       group_ids:
         isEmpty(groupNames) || isEmpty(groupNames[0])
           ? [null]
-          : Site.currentProp("groups").reduce((groupIds, g) => {
+          : this.site.groups.reduce((groupIds, g) => {
               if (groupNames.includes(g.name)) {
                 groupIds.push(g.id);
               }

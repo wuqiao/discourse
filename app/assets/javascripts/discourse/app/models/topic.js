@@ -307,7 +307,7 @@ const Topic = RestModel.extend({
 
   @discourseComputed("archetype")
   archetypeObject(archetype) {
-    return Site.currentProp("archetypes").findBy("id", archetype);
+    return this.site.archetypes.findBy("id", archetype);
   },
 
   isPrivateMessage: equal("archetype", "private_message"),

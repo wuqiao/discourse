@@ -357,7 +357,7 @@ const Post = RestModel.extend({
 
   updateLikeCount(count) {
     let current_actions_summary = this.get("actions_summary");
-    let likeActionID = Site.current().post_action_types.find(
+    let likeActionID = this.site.post_action_types.find(
       (a) => a.name_key === "like"
     ).id;
 

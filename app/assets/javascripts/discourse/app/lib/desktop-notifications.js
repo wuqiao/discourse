@@ -207,7 +207,7 @@ function requestPermission() {
 function i18nKey(notification_type) {
   return (
     "notifications.popup." +
-    Site.current().get("notificationLookup")[notification_type]
+    Site.currentProp("notificationLookup")[notification_type]
   );
 }
 

@@ -341,7 +341,7 @@ const Category = RestModel.extend({
 
   @discourseComputed("id")
   isUncategorizedCategory(id) {
-    return id === Site.currentProp("uncategorized_category_id");
+    return id === this.site.uncategorized_category_id;
   },
 });
 

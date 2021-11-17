@@ -7,7 +7,6 @@ import OpenComposer from "discourse/mixins/open-composer";
 import User from "discourse/models/user";
 import { scrollTop } from "discourse/mixins/scroll-top";
 import { setTopicList } from "discourse/lib/topic-list-tracker";
-import Site from "discourse/models/site";
 
 export default DiscourseRoute.extend(OpenComposer, {
   queryParams: {
@@ -34,7 +33,7 @@ export default DiscourseRoute.extend(OpenComposer, {
         },
       });
     } else if (url && (matches = url.match(/top\/(.*)$/))) {
-      if (Site.currentProp("periods").includes(matches[1])) {
+      if (this.site.periods.includes(matches[1])) {
         this.replaceWith("discovery.top", {
           queryParams: {
             period: matches[1],

@@ -7,7 +7,6 @@ import { discourseModule } from "discourse/tests/helpers/qunit-helpers";
 import hbs from "htmlbars-inline-precompile";
 import pretender from "discourse/tests/helpers/create-pretender";
 import selectKit from "discourse/tests/helpers/select-kit-helper";
-import { set } from "@ember/object";
 
 function initTags(context) {
   const categories = context.site.categoriesList;
@@ -28,8 +27,7 @@ discourseModule(
     hooks.beforeEach(function () {
       this.set("subject", selectKit());
 
-      const site = Site.current();
-      set(site, "top_tags", ["jeff", "neil", "arpit", "régis"]);
+      Site.currentProp("top_tags", ["jeff", "neil", "arpit", "régis"]);
 
       const response = (object) => {
         return [200, { "Content-Type": "application/json" }, object];

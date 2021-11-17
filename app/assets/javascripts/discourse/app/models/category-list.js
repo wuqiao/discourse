@@ -2,7 +2,6 @@ import ArrayProxy from "@ember/array/proxy";
 import Category from "discourse/models/category";
 import I18n from "I18n";
 import PreloadStore from "discourse/lib/preload-store";
-import Site from "discourse/models/site";
 import Topic from "discourse/models/topic";
 import { ajax } from "discourse/lib/ajax";
 import { number } from "discourse/lib/formatter";
@@ -79,14 +78,14 @@ CategoryList.reopenClass({
           break;
       }
 
-      if (Site.currentProp("mobileView")) {
+      if (this.site.mobileView) {
         c.statTotal = I18n.t("categories.topic_stat_all_time", {
           count: c.topics_all_time,
           number: `<span class="value">${number(c.topics_all_time)}</span>`,
         });
       }
 
-      const record = Site.current().updateCategory(c);
+      const record = this.site.updateCategory(c);
       record.setupGroupsAndPermissions();
       categories.pushObject(record);
     });

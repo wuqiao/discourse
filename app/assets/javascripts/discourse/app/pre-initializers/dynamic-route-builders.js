@@ -9,7 +9,7 @@ export default {
   after: "inject-discourse-objects",
   name: "dynamic-route-builders",
 
-  initialize(registry, app) {
+  initialize(_, app) {
     app.DiscoveryCategoryController = DiscoverySortableController.extend();
     app.DiscoveryCategoryNoneController = DiscoverySortableController.extend();
     app.DiscoveryCategoryAllController = DiscoverySortableController.extend();
@@ -22,8 +22,7 @@ export default {
       no_subcategories: false,
     });
 
-    const site = Site.current();
-    site.get("filters").forEach((filter) => {
+    Site.currentProp("filters").forEach((filter) => {
       const filterCapitalized = filter.capitalize();
       app[
         `Discovery${filterCapitalized}Controller`
@@ -55,14 +54,7 @@ export default {
       app[
         `Discovery${filterCapitalized}CategoryNoneRoute`
       ] = buildCategoryRoute(filter, { no_subcategories: true });
-    });
 
-    app["TagsShowCategoryRoute"] = TagShowRoute.extend();
-    app["TagsShowCategoryNoneRoute"] = TagShowRoute.extend({
-      noSubcategories: true,
-    });
-
-    site.get("filters").forEach(function (filter) {
       app["TagShow" + filter.capitalize() + "Route"] = TagShowRoute.extend({
         navMode: filter,
       });
@@ -72,6 +64,11 @@ export default {
       app[
         "TagsShowNoneCategory" + filter.capitalize() + "Route"
       ] = TagShowRoute.extend({ navMode: filter, noSubcategories: true });
+    });
+
+    app["TagsShowCategoryRoute"] = TagShowRoute.extend();
+    app["TagsShowCategoryNoneRoute"] = TagShowRoute.extend({
+      noSubcategories: true,
     });
   },
 };
