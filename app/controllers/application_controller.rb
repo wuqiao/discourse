@@ -41,13 +41,13 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_login_if_required
   before_action :block_if_requires_login
   before_action :preload_json
-  before_action :add_noindex_header, if: -> { is_feed_request? || !SiteSetting.allow_index_in_robots_txt }
   before_action :check_xhr
   after_action  :add_readonly_header
   after_action  :perform_refresh_session
   after_action  :dont_cache_page
   after_action  :conditionally_allow_site_embedding
   after_action  :ensure_vary_header
+  after_action  :add_noindex_header
 
   HONEYPOT_KEY ||= 'HONEYPOT_KEY'
   CHALLENGE_KEY ||= 'CHALLENGE_KEY'
@@ -903,13 +903,19 @@ class ApplicationController < ActionController::Base
   end
 
   def add_noindex_header
-    if request.get?
-      if SiteSetting.allow_index_in_robots_txt
-        response.headers['X-Robots-Tag'] = 'noindex'
-      else
-        response.headers['X-Robots-Tag'] = 'noindex, nofollow'
-      end
+    return if !request.get? || (request.format && request.format.json?) || request.xhr?
+    return if response.headers["X-Robots-Tag"] # Already set
+
+    canonical = (@canonical_url || @default_canonical)
+    value = if !SiteSetting.allow_index_in_robots_txt
+      'noindex'
+    elsif is_feed_request?
+      'noindex, nofollow'
+    elsif canonical.present? && canonical != request.url && !SiteSetting.allow_indexing_non_canonical_urls
+      'noindex'
     end
+
+    response.headers["X-Robots-Tag"] = value if value
   end
 
   protected
